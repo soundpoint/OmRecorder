@@ -1,12 +1,12 @@
 /**
  * Copyright 2017 Kailash Dabhi (Kingbull Technology)
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,21 +26,22 @@ import java.io.OutputStream;
  * @date 06-07-2016
  */
 public interface WriteAction {
-  /**
-   * Implement this behaviour to provide custom Write Action for audio which
-   * requires {@code data} to encode. So here One can encode the data
-   * according to chosen audio format.
-   */
-  void execute(AudioChunk audioChunk, OutputStream outputStream) throws IOException;
+    /**
+     * Implement this behaviour to provide custom Write Action for audio which
+     * requires {@code data} to encode. So here One can encode the data
+     * according to chosen audio format.
+     */
+    void execute(AudioChunk audioChunk, OutputStream outputStream) throws IOException;
 
-  /**
-   * Use this default implementation to write data directly without any encoding to OutputStream.
-   */
-  final class Default implements WriteAction {
-    @Override public void execute(AudioChunk audioChunk, OutputStream outputStream)
-        throws IOException {
-      outputStream.write(audioChunk.toBytes());
+    /**
+     * Use this default implementation to write data directly without any encoding to OutputStream.
+     */
+    final class Default implements WriteAction {
+        @Override
+        public void execute(AudioChunk audioChunk, OutputStream outputStream)
+                throws IOException {
+            outputStream.write(audioChunk.toBytes());
+        }
     }
-  }
 }
 

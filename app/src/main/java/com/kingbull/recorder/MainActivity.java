@@ -1,12 +1,12 @@
 /**
  * Copyright 2017 Kailash Dabhi (Kingbull Technology)
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,27 +30,29 @@ import android.widget.ListView;
  * Copyright (c) 2017 Kingbull Technology. All rights reserved.
  */
 public class MainActivity extends AppCompatActivity {
-  private final static String DEMO_PCM = "Pcm Recorder";
-  private final static String DEMO_WAV = "Wav Recorder";
-  ListView listView;
-  String[] demoArray = new String[] { "Pcm Recorder", "Wav Recorder" };
+    private final static String DEMO_PCM = "Pcm Recorder";
+    private final static String DEMO_WAV = "Wav Recorder";
+    ListView listView;
+    String[] demoArray = new String[]{"Pcm Recorder", "Wav Recorder"};
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    listView = (ListView) findViewById(android.R.id.list);
-    listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, demoArray));
-    listView.setOnItemClickListener(new OnItemClickListener() {
-      @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (demoArray[i]) {
-          case DEMO_PCM:
-            startActivity(new Intent(MainActivity.this, PcmRecorderActivity.class));
-            break;
-          case DEMO_WAV:
-            startActivity(new Intent(MainActivity.this, WavRecorderActivity.class));
-            break;
-        }
-      }
-    });
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, demoArray));
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (demoArray[i]) {
+                    case DEMO_PCM:
+                        startActivity(new Intent(MainActivity.this, PcmRecorderActivity.class));
+                        break;
+                    case DEMO_WAV:
+                        startActivity(new Intent(MainActivity.this, WavRecorderActivity.class));
+                        break;
+                }
+            }
+        });
+    }
 }
