@@ -19,8 +19,8 @@ import android.media.AudioFormat;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -56,7 +56,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recorder);
         getSupportActionBar().setTitle("Pcm Recorder");
         setupRecorder();
-        skipSilence = (CheckBox) findViewById(R.id.skipSilence);
+        skipSilence = findViewById(R.id.skipSilence);
         skipSilence.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -68,7 +68,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
             }
         });
 
-        recordButton = (ImageView) findViewById(R.id.recordButton);
+        recordButton = findViewById(R.id.recordButton);
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +88,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
                 skipSilence.setEnabled(true);
             }
         });
-        pauseResumeButton = (Button) findViewById(R.id.pauseResumeButton);
+        pauseResumeButton = findViewById(R.id.pauseResumeButton);
         pauseResumeButton.setOnClickListener(new View.OnClickListener() {
             boolean isPaused = false;
 
@@ -157,7 +157,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
         return new PullableSource.Default(
                 new AudioRecordConfig.Default(
                         MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
-                        AudioFormat.CHANNEL_IN_MONO, 44100
+                        AudioFormat.CHANNEL_IN_MONO, 8000
                 )
         );
     }
