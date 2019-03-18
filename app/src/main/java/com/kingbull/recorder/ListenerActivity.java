@@ -1,26 +1,9 @@
-/**
- * Copyright 2017 Kailash Dabhi (Kingbull Technology)
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.kingbull.recorder;
 
 import android.media.AudioFormat;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +15,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import omrecorder.AudioChunk;
 import omrecorder.AudioRecordConfig;
 import omrecorder.OmRecorder;
@@ -40,11 +25,8 @@ import omrecorder.PullableSource;
 import omrecorder.Recorder;
 import omrecorder.WriteAction;
 
-/**
- * @author Kailash Dabhi
- * @date 18-07-2016. Copyright (c) 2017 Kingbull Technology. All rights reserved.
- */
-public class WavRecorderActivity extends AppCompatActivity {
+public class ListenerActivity extends AppCompatActivity {
+    final int SAMPLE_RATE = 8000;
     Recorder recorder;
     ImageView recordButton;
     CheckBox skipSilence;
@@ -54,16 +36,16 @@ public class WavRecorderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recorder);
-        getSupportActionBar().setTitle("Wav Recorder");
-        setupRecorder();
+        getSupportActionBar().setTitle("Listener" + "  " + SAMPLE_RATE + "Hz");
+        setupListener();
         skipSilence = findViewById(R.id.skipSilence);
         skipSilence.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    setupNoiseRecorder();
+                    setupNoiseListener();
                 } else {
-                    setupRecorder();
+                    setupListener();
                 }
             }
         });
@@ -99,7 +81,7 @@ public class WavRecorderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (recorder == null) {
-                    Toast.makeText(WavRecorderActivity.this, "Please start recording first!",
+                    Toast.makeText(ListenerActivity.this, "Please start recording first!",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -119,10 +101,11 @@ public class WavRecorderActivity extends AppCompatActivity {
                 isPaused = !isPaused;
             }
         });
+
     }
 
-    private void setupRecorder() {
-        recorder = OmRecorder.wav(
+    private void setupListener() {
+        recorder = OmRecorder.listener(
                 new PullTransport.Default(mic(), new PullTransport.OnAudioChunkPulledListener() {
                     @Override
                     public void onAudioChunkPulled(AudioChunk audioChunk) {
@@ -131,8 +114,8 @@ public class WavRecorderActivity extends AppCompatActivity {
                 }), file());
     }
 
-    private void setupNoiseRecorder() {
-        recorder = OmRecorder.wav(
+    private void setupNoiseListener() {
+        recorder = OmRecorder.listener(
                 new PullTransport.Noise(mic(),
                         new PullTransport.OnAudioChunkPulledListener() {
                             @Override
@@ -145,14 +128,13 @@ public class WavRecorderActivity extends AppCompatActivity {
                             @Override
                             public void onSilence(long silenceTime) {
                                 Log.e("silenceTime", String.valueOf(silenceTime));
-                                Toast.makeText(WavRecorderActivity.this, "silence of " + silenceTime + " detected",
+                                Toast.makeText(ListenerActivity.this, "silence of " + silenceTime + " detected",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }, 200
                 ), file()
         );
     }
-
 
 
     private void animateVoice(final float maxPeak) {
@@ -163,13 +145,15 @@ public class WavRecorderActivity extends AppCompatActivity {
         return new PullableSource.Default(
                 new AudioRecordConfig.Default(
                         MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
-                        AudioFormat.CHANNEL_IN_MONO, 8000
+                        AudioFormat.CHANNEL_IN_MONO, SAMPLE_RATE
                 )
         );
     }
 
     @NonNull
     private File file() {
-        return new File(Environment.getExternalStorageDirectory(), "kailashdabhi.wav");
+        return new File(Environment.getExternalStorageDirectory(), "listener.wav");
     }
+
 }
+

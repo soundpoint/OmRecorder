@@ -2,4 +2,5 @@
     <string name="app_name">Recorder</string>
     <string name="pause_recording">Pause Recording</string>
     <string name="resume_recording">Resume Recording</string>
+    <string name="title_activity_listener">ListenerActivity</string>
 </resources>

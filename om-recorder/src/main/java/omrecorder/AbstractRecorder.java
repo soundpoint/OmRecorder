@@ -51,6 +51,7 @@ public abstract class AbstractRecorder implements Recorder {
         this.file = file;
     }
 
+
     @Override
     public void startRecording() {
         outputStream = outputStream(file);
