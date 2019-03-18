@@ -32,8 +32,9 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
     private final static String DEMO_PCM = "Pcm Recorder";
     private final static String DEMO_WAV = "Wav Recorder";
+    private final static String DEMO_LISTENER = "Listener";
     ListView listView;
-    String[] demoArray = new String[]{"Pcm Recorder", "Wav Recorder"};
+    String[] demoArray = new String[]{DEMO_PCM, DEMO_WAV, DEMO_LISTENER};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case DEMO_WAV:
                         startActivity(new Intent(MainActivity.this, WavRecorderActivity.class));
+                        break;
+                    case DEMO_LISTENER:
+                        startActivity(new Intent(MainActivity.this, ListenerActivity.class));
                         break;
                 }
             }
