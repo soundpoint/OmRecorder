@@ -16,6 +16,7 @@
 package omrecorder;
 
 import java.io.File;
+import java.io.OutputStream;
 
 /**
  * Essential APIs for working with OmRecorder.
@@ -35,8 +36,8 @@ public final class OmRecorder {
         return new Wav(pullTransport, file);
     }
 
-    public static Recorder listener(PullTransport pullTransport, File file) {
-        return new Listener(pullTransport, file);
+    public static Recorder listener(PullTransport pullTransport, OutputStream stream) {
+        return new Listener(pullTransport, stream);
     }
 
 }

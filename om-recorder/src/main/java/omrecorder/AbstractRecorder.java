@@ -31,6 +31,7 @@ import java.util.concurrent.Executors;
 public abstract class AbstractRecorder implements Recorder {
     protected final PullTransport pullTransport;
     protected final File file;
+    protected final OutputStream audioStream;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private OutputStream outputStream;
     private final Runnable recordingTask = new Runnable() {
@@ -49,13 +50,26 @@ public abstract class AbstractRecorder implements Recorder {
     protected AbstractRecorder(PullTransport pullTransport, File file) {
         this.pullTransport = pullTransport;
         this.file = file;
+        this.audioStream = null;
     }
 
+    protected AbstractRecorder(PullTransport pullTransport, OutputStream stream) {
+        this.pullTransport = pullTransport;
+        this.audioStream = stream;
+        this.file = null;
+    }
 
     @Override
     public void startRecording() {
-        outputStream = outputStream(file);
-        executorService.submit(recordingTask);
+        if (this.file != null) {
+            outputStream = outputStream(file);
+            executorService.submit(recordingTask);
+        } else if (this.audioStream != null) {
+            outputStream = this.audioStream;
+            executorService.submit(recordingTask);
+        } else {
+            throw new RuntimeException("file and stream is null !");
+        }
     }
 
     private OutputStream outputStream(File file) {
