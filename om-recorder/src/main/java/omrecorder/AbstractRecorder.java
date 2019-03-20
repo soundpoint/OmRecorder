@@ -51,10 +51,17 @@ public abstract class AbstractRecorder implements Recorder {
         this.file = file;
     }
 
+    protected AbstractRecorder(PullTransport pullTransport) {
+        this.pullTransport = pullTransport;
+        this.file = null;
+    }
 
     @Override
     public void startRecording() {
-        outputStream = outputStream(file);
+        if (file != null)
+            outputStream = outputStream(file);
+        else
+            outputStream = null;
         executorService.submit(recordingTask);
     }
 
@@ -75,8 +82,10 @@ public abstract class AbstractRecorder implements Recorder {
     @Override
     public void stopRecording() throws IOException {
         pullTransport.stop();
-        outputStream.flush();
-        outputStream.close();
+        if (outputStream != null) {
+            outputStream.flush();
+            outputStream.close();
+        }
     }
 
     @Override

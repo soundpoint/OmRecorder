@@ -22,8 +22,8 @@ import java.io.RandomAccessFile;
 
 
 final class Listener extends AbstractRecorder {
-    public Listener(PullTransport pullTransport, File file) {
-        super(pullTransport, file);
+    public Listener(PullTransport pullTransport) {
+        super(pullTransport);
     }
 
     @Override

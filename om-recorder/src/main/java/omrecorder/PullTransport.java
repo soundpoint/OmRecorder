@@ -140,7 +140,9 @@ public interface PullTransport {
                     if (onAudioChunkPulledListener != null) {
                         postPullEvent(audioChunk);
                     }
-                    writeAction.execute(audioChunk, outputStream);
+                    if (outputStream != null) {
+                        writeAction.execute(audioChunk, outputStream);
+                    }
                 }
             }
         }

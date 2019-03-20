@@ -112,7 +112,8 @@ public class ListenerActivity extends AppCompatActivity {
                         receiveAudioData(audioChunk);
                         animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
                     }
-                }), file());
+                })
+        );
     }
 
     private void setupNoiseListener() {
@@ -133,7 +134,7 @@ public class ListenerActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
                             }
                         }, 200
-                ), file()
+                )
         );
     }
 

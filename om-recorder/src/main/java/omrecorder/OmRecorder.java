@@ -35,8 +35,8 @@ public final class OmRecorder {
         return new Wav(pullTransport, file);
     }
 
-    public static Recorder listener(PullTransport pullTransport, File file) {
-        return new Listener(pullTransport, file);
+    public static Recorder listener(PullTransport pullTransport) {
+        return new Listener(pullTransport);
     }
 
 }
